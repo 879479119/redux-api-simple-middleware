@@ -18,7 +18,7 @@ then ...(still working on it)
 
 {
   "name": "redux-api-simple-middleware",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is a simple and useful middleware for redux without much learn",
   "main": "index.js",
   "scripts": {
