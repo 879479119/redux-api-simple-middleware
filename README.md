@@ -7,12 +7,84 @@ It is based on Redux,so I didn't write that in `package.json`
 
 ## Simple use with this middleware
 
-run `npm install redux-api-simple-middleware --save` in your project first
++ There is a good example built with react native and redux, [bilibili-react-native](https://github.com/879479119/Bilibili-React-Native),it's in the recommendPage.js
 
-import it in your `configStore.js` file(the file that you create a store and add other middleware) with:
-`import api-middleware from 'redux-api-simple-middleware'`
++ run `npm install redux-api-simple-middleware --save` in your project first
 
-then ...(still working on it)
++ import it in your `configStore.js` file(the file that you create a store and add other middleware) with:
+`import apiMiddleware from 'redux-api-simple-middleware'`,then append the middleware to the `applyMiddleware` function like:
+
+```
+export default function configureStore(initialState) {
+  return createStore(
+    rootReducer,
+    initialState,
+    compose(
+      applyMiddleware(
+        thunkMiddleware,
+        apiMiddleware
+      )
+    )
+  )
+}
+```
+
++ after you have configured the store,you may add the `SimpleAPIReducer` to your rootReducer like:
+
+```
+import {combineReducers} from 'redux'
+import {SimpleAPIReducer} from 'redux-api-simple-middleware'
+
+...
+
+const rootReducer = combineReducers ({
+  //maybe some other reducers
+  SimpleAPIReducer,
+})
+
+export default rootReducer
+```
+
++ if you got all the above steps done,congrantulations,you can start to use it in your project
+
++ here is a example(I assume that you can work with Redux easily ^_^):
+
+```
+import {fetchBackSymbol} from 'redux-api-simple-middleware'
+
+const log = fetchBackSymbol('http://app.bilibili.com/x/banner?plat=4')
+ //you have to keep the returned value,it's a unique object that can help you get the relevent response
+
+...
+
+//where you need to render with the fetchState,you can find a state named 'SMAfetchState'
+
+const {SAMfetchState, symbol, data} = this.props
+
+if(SAMfetchState == 1){
+  return 
+}else if(SAMfetchState == 2){
+  if(symbol == log){
+    renderData = Object.assign({}, data)
+  }
+  return renderData
+}
+
+...
+//I dont want to make it more difficult,but in fact,you must add the states in the page(Redux)
+
+const mapStateToProps = (state) => ({
+  SAMfetchState:state.SimpleAPIReducer.SAMfetchState,
+  data:state.SimpleAPIReducer.data,
+  symbol:state.SimpleAPIReducer.symbol
+})
+
+export default connect(mapStateToProps, {
+  fetchBackSymbol
+})(YOUR_COMPONENT_NAME)
+```
+
++ here goes the package.json
 
 ```
 
@@ -36,7 +108,7 @@ then ...(still working on it)
   "author": "RockSAMA",
   "license": "MIT",
   "bugs": {
-  	"url": "https://github.com/879479119/redux-api-simple-middleware/issues"
+    "url": "https://github.com/879479119/redux-api-simple-middleware/issues"
   },
   "dependencies": {
     "es6-symbol": "^3.1.0",

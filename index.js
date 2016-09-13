@@ -6,13 +6,13 @@ import * as N from './action'
 export const fetchBackSymbol = url => disptch => {
 	const symbol = Symbol("fetch")
 	disptch({
-		type: FETCH,
+		type: N.FETCH,
 		url, symbol
 	})
 	return symbol
 }
 
-//default export middleware,just need to add this in the middleware list
+//default exported middleware,just need to add this in the middleware list
 export default store => next => action => {
 
 	function actionWith(data) {
