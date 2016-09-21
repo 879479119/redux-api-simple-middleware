@@ -14,7 +14,7 @@ It is based on Redux,so I didn't write that in `package.json`
 + import it in your `configStore.js` file(the file that you create a store and add other middleware) with:
 `import apiMiddleware from 'redux-api-simple-middleware'`,then append the middleware to the `applyMiddleware` function like:
 
-```
+```js
 export default function configureStore(initialState) {
   return createStore(
     rootReducer,
@@ -31,7 +31,7 @@ export default function configureStore(initialState) {
 
 + after you have configured the store,you may add the `SimpleAPIReducer` to your rootReducer like:
 
-```
+```js
 import {combineReducers} from 'redux'
 import {SimpleAPIReducer} from 'redux-api-simple-middleware'
 
@@ -49,7 +49,7 @@ export default rootReducer
 
 + here is a example(I assume that you can work with Redux easily ^_^):
 
-```
+```js
 import {fetchBackSymbol} from 'redux-api-simple-middleware'
 
 const log = fetchBackSymbol('http://app.bilibili.com/x/banner?plat=4')
@@ -86,7 +86,7 @@ export default connect(mapStateToProps, {
 
 + here goes the package.json
 
-```
+```js
 
 {
   "name": "redux-api-simple-middleware",
